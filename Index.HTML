@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Truck Parts</title>
+
+  <style>
+
+    /*       CONFIGURAÇÕES GERAIS*/
+
+    html {
+      scroll-behavior: smooth;
+      interpolate-size: allow-keywords;
+    }
+
+
+    /*       RESET*/
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+
+    /*       BODY*/
+
+    body {
+      background-color: white;
+      color: black;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+
+    /*       PARTE BRANCA DO HEADER*/
+
+    .topo {
+      height: 90px;
+      background-color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 40px;
+      position: relative;
+    }
+
+
+    /*       LOGO*/
+
+    .logo {
+      width: 160px;
+      height: 80px;
+      position: absolute;
+      left: 40px;
+      object-fit: contain;
+    }
+
+
+    /*       BARRA DE PESQUISA*/
+
+    .search-bar {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      max-width: 400px;
+      background: #f0f0f0;
+      border-radius: 25px;
+      padding: 5px 15px;
+    }
+
+    .search-bar input {
+      flex: 1;
+      border: none;
+      background: transparent;
+      padding: 10px;
+      font-size: 16px;
+      outline: none;
+    }
+
+    .search-bar button {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 18px;
+      padding: 5px;
+    }
+
+
+    /*       USUÁRIO + CARRINHO + MENU*/
+
+    .container-usuario {
+      position: absolute;
+      right: 40px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+
+    /*       PERFIL*/
+
+    .perfil-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      text-decoration: none;
+      transition:
+        transform 0.2s ease,
+        opacity 0.2s ease;
+    }
+
+    .perfil-btn:hover {
+      opacity: 0.8;
+      transform: scale(1.05);
+    }
+
+    .perfil-btn:active {
+      transform: scale(0.95);
+    }
+
+    .perfil-btn img {
+      display: block;
+      object-fit: contain;
+    }
+
+
+    /*       CARRINHO*/
+
+    .carrinho-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      text-decoration: none;
+      transition:
+        transform 0.2s ease,
+        opacity 0.2s ease;
+    }
+
+    .carrinho-btn:hover {
+      opacity: 0.8;
+      transform: scale(1.05);
+    }
+
+    .carrinho-btn:active {
+      transform: scale(0.95);
+    }
+
+
+
+    /*       MENU DOS TRÊS RISQUINHOS*/
+
+    .menu-simples {
+      position: relative;
+    }
+
+    .menu-simples summary {
+      list-style: none;
+      cursor: pointer;
+      user-select: none;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 30px;
+      height: 24px;
+      transition: transform 0.2s ease;
+    }
+
+    .menu-simples summary:active {
+      transform: scale(0.95);
+    }
+
+    .menu-simples summary::-webkit-details-marker {
+      display: none;
+    }
+
+
+    /*       BARRINHAS*/
+
+    .menu-simples summary span {
+      display: block;
+      width: 100%;
+      height: 4px;
+      background-color: black;
+      border-radius: 2px;
+      transition:
+        transform 0.3s cubic-bezier(0.25, 1, 0.5, 1),
+        opacity 0.2s ease;
+    }
+
+
+    /*       MENU ABERTO*/
+
+    .menu-simples[open] summary span:nth-child(1) {
+      transform: translateY(10px) rotate(45deg);
+    }
+
+    .menu-simples[open] summary span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .menu-simples[open] summary span:nth-child(3) {
+      transform: translateY(-10px) rotate(-45deg);
+    }
+
+
+    /*       DROPDOWN*/
+
+    .dropdown {
+      position: absolute;
+      right: 0;
+      top: 35px;
+      width: 180px;
+      background-color: white;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      z-index: 100;
+      overflow: hidden;
+      height: 0;
+      opacity: 0;
+      padding: 0 8px;
+      transition:
+        height 0.35s cubic-bezier(0.25, 1, 0.5, 1),
+        opacity 0.2s ease,
+        padding 0.35s ease;
+    }
+
+    .menu-simples[open] .dropdown {
+      height: auto;
+      opacity: 1;
+      padding: 8px;
+    }
+
+    .dropdown a {
+      display: block;
+      padding: 10px;
+      color: black;
+      text-decoration: none;
+      font-size: 14px;
+      border-radius: 5px;
+    }
+
+    .dropdown a:hover {
+      background-color: #f0f0f0;
+    }
+
+
+    /*       MENU VERMELHO*/
+
+    .menu {
+      height: 65px;
+      background-color: #e30613;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 10px;
+    }
+
+    .menu a {
+      display: inline-block;
+      color: black;
+      text-decoration: none;
+      font-size: 16px;
+      font-weight: bold;
+      margin: 0 25px;
+      transition: 0.3s;
+    }
+
+    .menu a:hover {
+      color: white;
+      transform: scale(1.1);
+    }
+
+
+    /*       CARROSSEL*/
+
+    .carrossel {
+      width: 100%;
+      position: relative;
+      overflow: hidden;
+      margin-top: 0;
+    }
+
+
+    /*       FUNDO VERMELHO SOBRE A IMAGEM*/
+
+    .carrossel::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(197, 1, 1, 0.719);
+      z-index: 2;
+      pointer-events: none;
+    }
+
+
+    /*       TEXTO + IMAGEM SOBRE O CARROSSEL*/
+
+    .conteudo-carrossel {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 500px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 90px;
+      z-index: 3;
+    }
+
+
+    /*       TEXTO DO SLOGAN*/
+
+    .texto-carrossel {
+      width: 50%;
+    }
+
+    .texto-carrossel h1 {
+      color: white;
+      text-align: left;
+      font-size: 30px;
+      font-weight: bold;
+      line-height: 1.2;
+      margin: 0;
+    }
+
+
+    /*       IMAGEM AO LADO DO TEXTO*/
+
+    .imagem-carrossel {
+      width: 45%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .imagem-carrossel img {
+      width: 100%;
+      max-width: 500px;
+      height: auto;
+      object-fit: contain;
+    }
+
+
+    /*       ESCONDER RADIO*/
+
+    .carrossel input {
+      display: none;
+    }
+
+
+    /*       FAIXA DOS SLIDES*/
+
+    .slides {
+      display: flex;
+      width: 300%;
+      transition: transform 0.6s ease;
+    }
+
+
+    /*       CADA SLIDE*/
+
+    .slide {
+      width: 33.333333%;
+      flex-shrink: 0;
+    }
+
+
+    /*       IMAGENS DO CARROSSEL*/
+
+    .slide img {
+      width: 100%;
+      height: 500px;
+      display: block;
+      object-fit: cover;
+    }
+
+
+    /*       SLIDE 1*/
+
+    #slide1:checked ~ .slides {
+      transform: translateX(0);
+    }
+
+
+    /*       SLIDE 2*/
+
+    #slide2:checked ~ .slides {
+      transform: translateX(-33.333333%);
+    }
+
+
+    /*       SLIDE 3*/
+
+    #slide3:checked ~ .slides {
+      transform: translateX(-66.666666%);
+    }
+
+
+    /*       NAVEGAÇÃO*/
+
+    .navegacao {
+      position: absolute;
+      bottom: 25px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 10px;
+      z-index: 10;
+    }
+
+
+    /*       BOLINHAS*/
+
+    .navegacao label {
+      width: 13px;
+      height: 13px;
+      background-color: white;
+      border-radius: 50%;
+      cursor: pointer;
+      opacity: 0.6;
+      transition: 0.3s;
+    }
+
+    .navegacao label:hover {
+      opacity: 1;
+      transform: scale(1.2);
+    }
+
+
+    /*       BOLINHA ATIVA*/
+
+    #slide1:checked ~ .navegacao label:nth-child(1),
+    #slide2:checked ~ .navegacao label:nth-child(2),
+    #slide3:checked ~ .navegacao label:nth-child(3) {
+      opacity: 1;
+      transform: scale(1.25);
+    }
+
+
+    /*       SOBRE NÓS*/
+
+    .sobrenos {
+      width: 100%;
+      padding: 60px 20px;
+      text-align: center;
+      background-color: white;
+    }
+
+    .sobrenos h2 {
+      font-size: 40px;
+      font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+      color: black;
+    }
+
+
+    /*       IMAGENS DOS PRODUTOS POR SLIDE*/
+
+    .produto-slide {
+      display: none !important;
+    }
+
+
+    /*       PRODUTO DO SLIDE 1*/
+
+    #slide1:checked ~ .conteudo-carrossel .produto1 {
+      display: block !important;
+    }
+
+
+    /*       PRODUTO DO SLIDE 2*/
+
+    #slide2:checked ~ .conteudo-carrossel .produto2 {
+      display: block !important;
+    }
+
+
+    /*       PRODUTO DO SLIDE 3*/
+
+    #slide3:checked ~ .conteudo-carrossel .produto3 {
+      display: block !important;
+    }
+
+
+    /*       CONTROLE INDIVIDUAL DO TAMANHO*/
+
+
+    /* PRODUTO 1 */
+
+    .imagem-carrossel .produto1 {
+      width: 700px !important;
+      max-width: none !important;
+      height: auto !important;
+    }
+
+
+    /* PRODUTO 2 */
+
+    .imagem-carrossel .produto2 {
+      width: 700px !important;
+      max-width: none !important;
+      height: auto !important;
+    }
+
+
+    /* PRODUTO 3 */
+
+    .imagem-carrossel .produto3 {
+      width: 550px !important;
+      max-width: none !important;
+      height: auto !important;
+    }
+
+
+  </style>
+
+</head>
+
+<body>
+
+  <!--       HEADER-->
+
+  <header>
+
+<!-- PARTE BRANCA -->
+
+<div class="topo">
+
+  <!-- LOGO -->
+
+  <img
+    src="IMAGENS/logo.png"
+    alt="Logo Truck Parts"
+    class="logo"
+  />
+
+
+  <!-- BARRA DE PESQUISA -->
+
+  <form class="search-bar" action="/busca" method="get" role="search">
+
+    <input
+      type="text"
+      name="q"
+      placeholder="Pesquisar..."
+      aria-label="Pesquisar produtos"
+      required
+    />
+
+    <button type="submit" aria-label="Buscar">🔍</button>
+
+  </form>
+
+
+  <!-- USUÁRIO + CARRINHO + MENU -->
+
+  <div class="container-usuario">
+
+
+    <!--         CARRINHO-->
+
+    <a
+      href="#"
+      class="carrinho-btn"
+      title="Carrinho"
+    >
+
+      <img
+        src="IMAGENS/carrinho.png"
+        width="35"
+        height="35"
+        alt="Ícone do carrinho de compras"
+      />
+
+    </a>
+
+
+    <!-- PERFIL -->
+
+    <a
+      href="#"
+      class="perfil-btn"
+      title="Minha Conta"
+    >
+
+      <img
+        src="IMAGENS/Avatar_perfil.png"
+        width="60"
+        height="50"
+        alt="Ícone de perfil do usuário"
+      />
+
+    </a>
+
+
+    <!--         MENU DOS TRÊS RISCOS-->
+
+    <details class="menu-simples">
+
+      <summary aria-label="Abrir menu">
+
+        <span></span>
+        <span></span>
+        <span></span>
+
+      </summary>
+
+
+      <div class="dropdown">
+
+        <a href="#">
+          Ajuda e Suporte
+        </a>
+
+      </div>
+
+    </details>
+
+  </div>
+
+</div>
+
+
+<!-- PARTE VERMELHA -->
+
+<nav class="menu">
+
+  <a href="#sobre">
+    SOBRE NÓS
+  </a>
+
+  <a href="#">
+    PRODUTOS
+  </a>
+
+  <a href="#">
+    CATÁLOGO
+  </a>
+
+  <a href="#">
+    OFERTAS
+  </a>
+
+  <a href="#">
+    CONTATO
+  </a>
+
+</nav>
+
+
+  </header>
+
+  <main>
+
+  <!--       CARROSSEL-->
+
+  <section class="carrossel">
+
+
+<!-- CONTROLES -->
+
+<input
+  type="radio"
+  name="slide"
+  id="slide1"
+  checked
+/>
+
+<input
+  type="radio"
+  name="slide"
+  id="slide2"
+/>
+
+<input
+  type="radio"
+  name="slide"
+  id="slide3"
+/>
+
+
+<!--     TEXTO + IMAGEM-->
+
+<div class="conteudo-carrossel">
+
+
+  <!-- TEXTO À ESQUERDA -->
+
+  <div class="texto-carrossel">
+
+    <h1>
+
+      QUALIDADE E CONFIANÇA
+      <br>
+      PARA MANTER O SEU CAMINHÃO
+      <br>
+      NA ESTRADA
+
+    </h1>
+
+  </div>
+
+
+  <!-- IMAGEM À DIREITA -->
+
+  <div class="imagem-carrossel">
+
+    <!-- PRODUTO DO SLIDE 1 -->
+
+    <img
+      class="produto-slide produto1"
+      src="IMAGENS/carrosel_produtos1.png"
+      alt="Peça em destaque no slide 1"
+    />
+
+
+    <!-- PRODUTO DO SLIDE 2 -->
+
+    <img
+      class="produto-slide produto2"
+      src="IMAGENS/pcarrosel_rodutos2.png"
+      alt="Peça em destaque no slide 2"
+    />
+
+
+    <!-- PRODUTO DO SLIDE 3 -->
+
+    <img
+      class="produto-slide produto3"
+      src="IMAGENS/carrosel_produtos.png"
+      alt="Peça em destaque no slide 3"
+    />
+
+  </div>
+
+</div>
+
+
+<!-- SLIDES -->
+
+<div class="slides">
+
+
+  <!-- PRIMEIRO SLIDE -->
+
+  <div class="slide">
+
+    <img
+      src="IMAGENS/carrosel_sobreposto1.jpeg"
+      alt="Banner promocional 1 da Truck Parts"
+    />
+
+  </div>
+
+
+  <!-- SEGUNDO SLIDE -->
+
+  <div class="slide">
+
+    <img
+      src="IMAGENS/carrosel_sobreposto2.jpeg"
+      alt="Banner promocional 2 da Truck Parts"
+    />
+
+  </div>
+
+
+  <!-- TERCEIRO SLIDE -->
+
+  <div class="slide">
+
+    <img
+      src="IMAGENS/carrosel_sobreposto.jpeg"
+      alt="Banner promocional 3 da Truck Parts"
+    />
+
+  </div>
+
+</div>
+
+
+<!-- NAVEGAÇÃO -->
+
+<div class="navegacao">
+
+  <label for="slide1"></label>
+  <label for="slide2"></label>
+  <label for="slide3"></label>
+
+</div>
+
+  </section>
+
+  <!--       SOBRE NÓS-->
+
+  <section class="sobrenos" id="sobre">
+
+    <h2>SOBRE NÓS</h2>
+
+  </section>
+
+  </main>
+
+</body>
+
+</html>
