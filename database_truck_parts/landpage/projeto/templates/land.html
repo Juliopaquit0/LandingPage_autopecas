@@ -1,0 +1,1364 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Truck Parts - Peças e componentes para caminhões"
+    />
+    <title>Truck Parts</title>
+
+    <style>
+      /* =========================
+           RESET
+        ========================= */
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        background: #fff;
+        color: #111;
+      }
+
+      img {
+        max-width: 100%;
+      }
+
+      a {
+        text-decoration: none;
+      }
+
+      /* =========================
+           HEADER
+        ========================= */
+
+      .topo {
+        height: 90px;
+        background: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        padding: 0 40px;
+      }
+
+      .logo {
+        position: absolute;
+        left: 40px;
+        width: 160px;
+        height: 80px;
+        object-fit: contain;
+      }
+
+      .container-usuario {
+        position: absolute;
+        right: 40px;
+        display: flex;
+        align-items: center;
+        gap: 20px;
+      }
+
+      .perfil-btn,
+      .carrinho-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: 0.25s;
+      }
+
+      .perfil-btn:hover,
+      .carrinho-btn:hover {
+        transform: scale(1.08);
+        opacity: 0.8;
+      }
+
+      .perfil-btn:active,
+      .carrinho-btn:active {
+        transform: scale(0.95);
+      }
+
+      .perfil-btn img,
+      .carrinho-btn img {
+        object-fit: contain;
+      }
+
+      /* =========================
+           MENU HAMBÚRGUER
+        ========================= */
+
+      .menu-simples {
+        position: relative;
+      }
+
+      .menu-simples summary {
+        list-style: none;
+        cursor: pointer;
+        width: 30px;
+        height: 24px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        transition: 0.2s;
+      }
+
+      .menu-simples summary::-webkit-details-marker {
+        display: none;
+      }
+
+      .menu-simples summary span {
+        width: 100%;
+        height: 4px;
+        background: #111;
+        border-radius: 4px;
+        transition: 0.3s;
+      }
+
+      .menu-simples[open] summary span:nth-child(1) {
+        transform: translateY(10px) rotate(45deg);
+      }
+
+      .menu-simples[open] summary span:nth-child(2) {
+        opacity: 0;
+      }
+
+      .menu-simples[open] summary span:nth-child(3) {
+        transform: translateY(-10px) rotate(-45deg);
+      }
+
+      .dropdown {
+        position: absolute;
+        right: 0;
+        top: 35px;
+        width: 210px;
+        background: #fff;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.18);
+        padding: 8px;
+        z-index: 1000;
+      }
+
+      .dropdown a {
+        display: block;
+        color: #111;
+        padding: 12px;
+        border-radius: 7px;
+        font-size: 14px;
+        transition: 0.2s;
+      }
+
+      .dropdown a:hover {
+        background: #f1f1f1;
+        color: #e30613;
+      }
+
+      /* =========================
+           MENU PRINCIPAL
+        ========================= */
+
+      .menu {
+        min-height: 65px;
+        background: #e30613;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 45px;
+        padding: 10px 20px;
+      }
+
+      .menu a {
+        color: #111;
+        font-size: 16px;
+        font-weight: 700;
+        transition: 0.25s;
+      }
+
+      .menu a:hover {
+        color: #fff;
+        transform: translateY(-2px);
+      }
+
+      /* =========================
+           CARROSSEL PRINCIPAL
+        ========================= */
+
+      .carrossel {
+        width: 100%;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .carrossel input {
+        display: none;
+      }
+
+      .slides {
+        display: flex;
+        width: 300%;
+        transition: transform 0.7s ease;
+      }
+
+      .slide {
+        width: 33.3333%;
+        flex-shrink: 0;
+        position: relative;
+      }
+
+      .slide img {
+        width: 100%;
+        height: 500px;
+        object-fit: cover;
+        display: block;
+      }
+
+      .carrossel::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: rgba(170, 0, 0, 0.67);
+        pointer-events: none;
+        z-index: 2;
+      }
+
+      .conteudo-carrossel {
+        position: absolute;
+        inset: 0;
+        height: 500px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 8%;
+        z-index: 5;
+      }
+
+      .texto-carrossel {
+        width: 48%;
+      }
+
+      .texto-carrossel h1 {
+        color: #fff;
+        font-size: clamp(25px, 3vw, 42px);
+        line-height: 1.15;
+        font-weight: 800;
+      }
+
+      .texto2,
+      .texto3 {
+        display: none;
+      }
+
+      #slide1:checked ~ .conteudo-carrossel .texto1 {
+        display: block;
+        animation: aparecer 0.8s ease;
+      }
+
+      #slide2:checked ~ .conteudo-carrossel .texto1,
+      #slide3:checked ~ .conteudo-carrossel .texto1 {
+        display: none;
+      }
+
+      #slide2:checked ~ .conteudo-carrossel .texto2 {
+        display: block;
+        animation: aparecer 0.8s ease;
+      }
+
+      #slide3:checked ~ .conteudo-carrossel .texto3 {
+        display: block;
+        animation: aparecer 0.8s ease;
+      }
+
+      @keyframes aparecer {
+        from {
+          opacity: 0;
+          transform: translateY(15px);
+        }
+
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      #slide1:checked ~ .slides {
+        transform: translateX(0);
+      }
+
+      #slide2:checked ~ .slides {
+        transform: translateX(-33.3333%);
+      }
+
+      #slide3:checked ~ .slides {
+        transform: translateX(-66.6666%);
+      }
+
+      /* =========================
+           PRODUTOS DO CARROSSEL
+        ========================= */
+
+      .imagem-carrossel {
+        width: 45%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .produto-slide {
+        display: none;
+        max-width: 100%;
+        max-height: 430px;
+        object-fit: contain;
+        animation: aparecer 0.8s ease;
+      }
+
+      #slide1:checked ~ .conteudo-carrossel .produto1 {
+        display: block;
+      }
+
+      #slide2:checked ~ .conteudo-carrossel .produto2 {
+        display: block;
+      }
+
+      #slide3:checked ~ .conteudo-carrossel .produto3 {
+        display: block;
+      }
+
+      /* =========================
+           NAVEGAÇÃO CARROSSEL
+        ========================= */
+
+      .navegacao-principal {
+        position: absolute;
+        bottom: 25px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 10px;
+        z-index: 20;
+      }
+
+      .navegacao-principal label {
+        width: 13px;
+        height: 13px;
+        background: #fff;
+        border-radius: 50%;
+        cursor: pointer;
+        opacity: 0.55;
+        transition: 0.25s;
+      }
+
+      .navegacao-principal label:hover {
+        opacity: 1;
+        transform: scale(1.2);
+      }
+
+      #slide1:checked ~ .navegacao-principal label:nth-child(1),
+      #slide2:checked ~ .navegacao-principal label:nth-child(2),
+      #slide3:checked ~ .navegacao-principal label:nth-child(3) {
+        opacity: 1;
+        transform: scale(1.25);
+      }
+
+      /* =========================
+           SOBRE NÓS
+        ========================= */
+
+      .faixa-listrada {
+        background: repeating-linear-gradient(
+          -45deg,
+          #fff 0,
+          #fff 18px,
+          #d5d5d5 18px,
+          #d5d5d5 36px
+        );
+      }
+
+      .sobrenos {
+        padding: 65px 20px;
+        text-align: center;
+      }
+
+      .sobrenos h1,
+      .contato h1 {
+        font-size: clamp(35px, 5vw, 55px);
+        color: #700606;
+        margin-bottom: 15px;
+      }
+
+      .sobrenos h1::after,
+      .contato h1::after {
+        content: "";
+        display: block;
+        width: 200px;
+        height: 5px;
+        background: #e30613;
+        margin: 12px auto 25px;
+      }
+
+      .sobrenos p {
+        max-width: 950px;
+        margin: 8px auto;
+        font-size: clamp(17px, 2vw, 23px);
+        line-height: 1.5;
+      }
+
+      /* =========================
+           INFORMAÇÕES
+        ========================= */
+
+      .imagens-informacoes {
+        display: flex;
+        width: 100%;
+      }
+
+      .imagens-informacoes img {
+        width: 33.3333%;
+        height: 210px;
+        object-fit: cover;
+        display: block;
+      }
+
+      .textos-informacoes {
+        display: flex;
+        width: 100%;
+      }
+
+      .texto-vermelho,
+      .texto-branco {
+        width: 50%;
+        min-height: 170px;
+        padding: 35px 8%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+      }
+
+      .texto-vermelho {
+        background: #e30613;
+        color: #fff;
+      }
+
+      .texto-branco {
+        background: #fff;
+        color: #111;
+      }
+
+      .texto-vermelho p,
+      .texto-branco p {
+        font-size: 17px;
+        line-height: 1.5;
+      }
+
+      /* =========================
+           PRODUTOS
+        ========================= */
+
+      .produtos-servicos {
+        background: #fff;
+        padding: 70px 30px;
+        text-align: center;
+        overflow: hidden;
+      }
+
+      .titulo-produtos h1 {
+        font-size: clamp(34px, 5vw, 48px);
+        color: #222;
+      }
+
+      .linha-titulo {
+        width: 300px;
+        max-width: 80%;
+        height: 5px;
+        background: #e30613;
+        margin: 12px auto 28px;
+        position: relative;
+      }
+
+      .linha-titulo::after {
+        content: "";
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: 70px;
+        height: 5px;
+        background: #333;
+      }
+
+      .descricao-produtos {
+        max-width: 1000px;
+        margin: auto;
+        font-size: 17px;
+        line-height: 1.6;
+        color: #333;
+      }
+
+      /* =========================
+           SLIDER DE CATEGORIAS
+        ========================= */
+
+      .prod-slider {
+        position: relative;
+        width: 100%;
+        max-width: 1100px;
+        margin: 50px auto 0;
+        overflow: hidden;
+      }
+
+      .prod-slides {
+        display: flex;
+        width: 300%;
+        transition: transform 0.6s ease;
+      }
+
+      .prod-slide {
+        width: 33.3333%;
+        flex-shrink: 0;
+        display: flex;
+        justify-content: center;
+        gap: 35px;
+        padding: 20px 50px;
+      }
+
+      .categoria {
+        width: 50%;
+        background: #fff;
+        border: 1px solid #eee;
+        border-radius: 15px;
+        padding: 15px;
+        cursor: pointer;
+        transition: 0.3s;
+        box-shadow: 0 5px 18px rgba(0, 0, 0, 0.08);
+      }
+
+      .categoria:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 12px 25px rgba(0, 0, 0, 0.14);
+      }
+
+      .imagem-categoria {
+        height: 200px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #fafafa;
+        border-radius: 10px;
+        overflow: hidden;
+      }
+
+      .imagem-categoria img {
+        max-width: 190px;
+        max-height: 175px;
+        object-fit: contain;
+        transition: 0.3s;
+      }
+
+      .categoria:hover img {
+        transform: scale(1.07);
+      }
+
+      .categoria h2 {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        margin-top: 15px;
+        color: #292929;
+        font-size: 20px;
+      }
+
+      .categoria h2 span {
+        width: 23px;
+        height: 23px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #e30613;
+        color: #fff;
+        border-radius: 50%;
+        font-size: 22px;
+      }
+
+      /* =========================
+           SETAS
+        ========================= */
+
+      .prod-nav {
+        position: absolute;
+        top: 50%;
+        left: 10px;
+        right: 10px;
+        transform: translateY(-50%);
+        display: flex;
+        justify-content: space-between;
+        pointer-events: none;
+        z-index: 10;
+      }
+
+      .prod-nav button {
+        pointer-events: auto;
+        width: 42px;
+        height: 42px;
+        border: 0;
+        border-radius: 50%;
+        background: #e30613;
+        color: #fff;
+        font-size: 27px;
+        cursor: pointer;
+        transition: 0.25s;
+      }
+
+      .prod-nav button:hover {
+        background: #a9000b;
+        transform: scale(1.08);
+      }
+
+      /* =========================
+           BOLINHAS PRODUTOS
+        ========================= */
+
+      .bolinhas-produtos {
+        display: flex;
+        justify-content: center;
+        gap: 12px;
+        margin-top: 25px;
+      }
+
+      .bolinhas-produtos label {
+        width: 13px;
+        height: 13px;
+        border-radius: 50%;
+        background: #d5d5d5;
+        cursor: pointer;
+        transition: 0.25s;
+      }
+
+      .bolinhas-produtos label:hover {
+        transform: scale(1.2);
+      }
+
+      #p_slide1:checked ~ .prod-slider .prod-slides {
+        transform: translateX(0);
+      }
+
+      #p_slide2:checked ~ .prod-slider .prod-slides {
+        transform: translateX(-33.3333%);
+      }
+
+      #p_slide3:checked ~ .prod-slider .prod-slides {
+        transform: translateX(-66.6666%);
+      }
+
+      #p_slide1:checked ~ .bolinhas-produtos label:nth-child(1),
+      #p_slide2:checked ~ .bolinhas-produtos label:nth-child(2),
+      #p_slide3:checked ~ .bolinhas-produtos label:nth-child(3) {
+        background: #e30613;
+        transform: scale(1.2);
+      }
+
+      /* =========================
+           CONTATO
+        ========================= */
+
+      .contato {
+        padding: 70px 20px;
+        text-align: center;
+      }
+
+      .contato > p {
+        font-size: 22px;
+        margin-bottom: 25px;
+      }
+
+      .dados-contato {
+        max-width: 650px;
+        margin: auto;
+        background: #fff;
+        border-radius: 20px;
+        padding: 30px;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+      }
+
+      .dados-contato p {
+        font-size: 18px;
+        line-height: 1.6;
+        margin: 12px 0;
+      }
+
+      .dados-contato strong {
+        color: #e30613;
+      }
+
+      /* =========================
+           RESPONSIVIDADE
+        ========================= */
+
+      @media (max-width: 800px) {
+        .topo {
+          height: 75px;
+          padding: 0 20px;
+        }
+
+        .logo {
+          left: 15px;
+          width: 120px;
+          height: 65px;
+        }
+
+        .container-usuario {
+          right: 15px;
+          gap: 12px;
+        }
+
+        .perfil-btn img {
+          width: 45px;
+          height: 40px;
+        }
+
+        .carrinho-btn img {
+          width: 30px;
+          height: 30px;
+        }
+
+        .menu {
+          gap: 15px;
+          flex-wrap: wrap;
+        }
+
+        .menu a {
+          font-size: 13px;
+        }
+
+        .slide img,
+        .conteudo-carrossel {
+          height: 430px;
+        }
+
+        .conteudo-carrossel {
+          padding: 0 30px;
+        }
+
+        .texto-carrossel {
+          width: 55%;
+        }
+
+        .imagem-carrossel {
+          width: 42%;
+        }
+
+        .imagens-informacoes {
+          flex-direction: column;
+        }
+
+        .imagens-informacoes img {
+          width: 100%;
+          height: 190px;
+        }
+
+        .textos-informacoes {
+          flex-direction: column;
+        }
+
+        .texto-vermelho,
+        .texto-branco {
+          width: 100%;
+        }
+
+        .prod-slide {
+          padding: 20px 35px;
+          gap: 15px;
+        }
+
+        .categoria {
+          padding: 10px;
+        }
+
+        .imagem-categoria {
+          height: 160px;
+        }
+      }
+
+      @media (max-width: 550px) {
+        .menu {
+          padding: 12px 10px;
+          gap: 12px;
+        }
+
+        .menu a {
+          font-size: 11px;
+        }
+
+        .conteudo-carrossel {
+          padding: 0 20px;
+        }
+
+        .texto-carrossel {
+          width: 58%;
+        }
+
+        .imagem-carrossel {
+          width: 40%;
+        }
+
+        .texto-carrossel h1 {
+          font-size: 22px;
+        }
+
+        .produto-slide {
+          max-height: 250px;
+        }
+
+        .prod-slide {
+          padding: 15px 35px;
+          gap: 10px;
+        }
+
+        .categoria {
+          width: 50%;
+        }
+
+        .imagem-categoria {
+          height: 125px;
+        }
+
+        .imagem-categoria img {
+          max-width: 120px;
+          max-height: 110px;
+        }
+
+        .categoria h2 {
+          font-size: 15px;
+        }
+
+        .categoria h2 span {
+          width: 18px;
+          height: 18px;
+          font-size: 17px;
+        }
+
+        .dados-contato {
+          padding: 20px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- =========================
+         HEADER
+    ========================= -->
+
+    <header>
+      <div class="topo">
+        <a href="{{ url_for('land') }}">
+          <img
+            src="{{ url_for('static', filename='imagens/logo.png') }}"
+            alt="Logo Truck Parts"
+            class="logo"
+          />
+        </a>
+
+        <div class="container-usuario">
+          <!-- CARRINHO -->
+          <a
+            href="{{ url_for('carrinho') }}"
+            class="carrinho-btn"
+            title="Carrinho de compras"
+          >
+            <img
+              src="{{ url_for('static', filename='imagens/carrinho.png') }}"
+              width="35"
+              height="35"
+              alt="Carrinho"
+            />
+          </a>
+
+          <!-- PERFIL -->
+          <a
+            href="{{ url_for('cadastro') }}"
+            class="perfil-btn"
+            title="Minha conta"
+          >
+            <img
+              src="{{ url_for('static', filename='imagens/Avatar_perfil.png') }}"
+              width="60"
+              height="50"
+              alt="Perfil"
+            />
+          </a>
+
+          <!-- MENU -->
+          <details class="menu-simples">
+            <summary aria-label="Abrir menu">
+              <span></span>
+              <span></span>
+              <span></span>
+            </summary>
+
+            <div class="dropdown">
+              <a href=""> Ajuda e Suporte </a>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <nav class="menu">
+        <a href="#sobre"> SOBRE NÓS </a>
+
+        <a href="#produtos"> PRODUTOS </a>
+
+        <a href="{{ url_for('catalogo') }}"> CATÁLOGO </a>
+
+        <a href="#contato"> CONTATO </a>
+      </nav>
+    </header>
+
+    <main>
+      <!-- =========================
+             CARROSSEL PRINCIPAL
+        ========================= -->
+
+      <section class="carrossel">
+        <input type="radio" name="slide" id="slide1" checked />
+        <input type="radio" name="slide" id="slide2" />
+        <input type="radio" name="slide" id="slide3" />
+
+        <div class="conteudo-carrossel">
+          <div class="texto-carrossel">
+            <h1 class="texto1">
+              QUALIDADE E CONFIANÇA
+              <br />
+              PARA MANTER O SEU CAMINHÃO
+              <br />
+              NA ESTRADA
+            </h1>
+
+            <h1 class="texto2">
+              PEÇAS DE QUALIDADE
+              <br />
+              PARA QUEM NÃO PODE PARAR
+            </h1>
+
+            <h1 class="texto3">
+              TRUCK PARTS
+              <br />
+              FORÇA PARA SEGUIR EM FRENTE
+            </h1>
+          </div>
+
+          <div class="imagem-carrossel">
+            <img
+              class="produto-slide produto1"
+              src="{{ url_for('static', filename='imagens/carrosel_produtos1.png') }}"
+              alt="Produto Truck Parts"
+            />
+
+            <img
+              class="produto-slide produto2"
+              src="{{ url_for('static', filename='imagens/pcarrosel_rodutos2.png') }}"
+              alt="Produto Truck Parts"
+            />
+
+            <img
+              class="produto-slide produto3"
+              src="{{ url_for('static', filename='imagens/carrosel_produtos.png') }}"
+              alt="Produto Truck Parts"
+            />
+          </div>
+        </div>
+
+        <div class="slides">
+          <div class="slide">
+            <img
+              src="{{ url_for('static', filename='imagens/carrosel_sobreposto1.jpeg') }}"
+              alt="Caminhão Truck Parts"
+            />
+          </div>
+
+          <div class="slide">
+            <img
+              src="{{ url_for('static', filename='imagens/carrosel_sobreposto2.jpeg') }}"
+              alt="Caminhão Truck Parts"
+            />
+          </div>
+
+          <div class="slide">
+            <img
+              src="{{ url_for('static', filename='imagens/carrosel_sobreposto.jpeg') }}"
+              alt="Caminhão Truck Parts"
+            />
+          </div>
+        </div>
+
+        <div class="navegacao-principal">
+          <label for="slide1" aria-label="Slide 1"></label>
+          <label for="slide2" aria-label="Slide 2"></label>
+          <label for="slide3" aria-label="Slide 3"></label>
+        </div>
+      </section>
+
+      <!-- =========================
+             SOBRE NÓS
+        ========================= -->
+
+      <section class="faixa-listrada sobrenos" id="sobre">
+        <h1>SOBRE NÓS</h1>
+
+        <p>
+          A Truck Parts entrega peças de qualidade e confiança para quem mantém
+          o Brasil em movimento.
+        </p>
+
+        <p>
+          Soluções que garantem desempenho, segurança e força para o seu
+          caminhão seguir sempre em frente.
+        </p>
+      </section>
+
+      <!-- =========================
+             INFORMAÇÕES
+        ========================= -->
+
+      <section class="informacoes">
+        <div class="imagens-informacoes">
+          <img
+            src="{{ url_for('static', filename='imagens/images.jpg') }}"
+            alt="Peças para caminhões"
+          />
+
+          <img
+            src="{{ url_for('static', filename='imagens/chassi.jpg') }}"
+            alt="Chassi para caminhão"
+          />
+
+          <img
+            src="{{ url_for('static', filename='imagens/distribuidora.webp') }}"
+            alt="Distribuidora automotiva"
+          />
+        </div>
+
+        <div class="textos-informacoes">
+          <div class="texto-vermelho">
+            <p>
+              Nossa missão é atender às necessidades de nossos clientes com
+              qualidade, segurança e confiança.
+            </p>
+          </div>
+
+          <div class="texto-branco">
+            <p>
+              Trabalhamos com empresas em nível nacional e internacional,
+              fornecendo soluções para o setor de transporte.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- =========================
+             PRODUTOS
+        ========================= -->
+
+      <section class="produtos-servicos" id="produtos">
+        <div class="titulo-produtos">
+          <h1>Produtos / Serviços</h1>
+
+          <div class="linha-titulo"></div>
+        </div>
+
+        <p class="descricao-produtos">
+          Na Truck Parts você encontra peças e componentes para caminhões, com
+          qualidade e confiança para manter seu veículo sempre em movimento.
+
+          <br /><br />
+
+          Confira abaixo algumas de nossas principais categorias.
+        </p>
+
+        <!-- CONTROLES DO SLIDER -->
+
+        <input type="radio" name="p_slide" id="p_slide1" checked hidden />
+
+        <input type="radio" name="p_slide" id="p_slide2" hidden />
+
+        <input type="radio" name="p_slide" id="p_slide3" hidden />
+
+        <!-- SLIDER -->
+
+        <div class="prod-slider">
+          <div class="prod-slides">
+            <!-- SLIDE 1 -->
+
+            <div class="prod-slide">
+              <a
+                href="{{ url_for('catalogo') }}?categoria=Freios"
+                class="categoria"
+              >
+                <div class="imagem-categoria">
+                  <img
+                    src="{{ url_for('static', filename='imagens/freio.jpg') }}"
+                    alt="Peças de freio"
+                  />
+                </div>
+
+                <h2>
+                  <span>›</span>
+                  Freios
+                </h2>
+              </a>
+
+              <a
+                href="{{ url_for('catalogo') }}?categoria=Motor"
+                class="categoria"
+              >
+                <div class="imagem-categoria">
+                  <img
+                    src="{{ url_for('static', filename='imagens/motor.jpg') }}"
+                    alt="Peças de motor"
+                  />
+                </div>
+
+                <h2>
+                  <span>›</span>
+                  Motor
+                </h2>
+              </a>
+            </div>
+
+            <!-- SLIDE 2 -->
+
+            <div class="prod-slide">
+              <a
+                href="{{ url_for('catalogo') }}?categoria=Suspensão"
+                class="categoria"
+              >
+                <div class="imagem-categoria">
+                  <img
+                    src="{{ url_for('static', filename='imagens/suspensão.webp') }}"
+                    alt="Peças de suspensão"
+                  />
+                </div>
+
+                <h2>
+                  <span>›</span>
+                  Suspensão
+                </h2>
+              </a>
+
+              <a
+                href="{{ url_for('catalogo') }}?categoria=Filtros"
+                class="categoria"
+              >
+                <div class="imagem-categoria">
+                  <img
+                    src="{{ url_for('static', filename='imagens/filtro.jpg') }}"
+                    alt="Filtros para caminhão"
+                  />
+                </div>
+
+                <h2>
+                  <span>›</span>
+                  Filtros
+                </h2>
+              </a>
+            </div>
+
+            <!-- SLIDE 3 -->
+
+            <div class="prod-slide">
+              <a
+                href="{{ url_for('catalogo') }}?categoria=Chassi"
+                class="categoria"
+              >
+                <div class="imagem-categoria">
+                  <img
+                    src="{{ url_for('static', filename='imagens/chassi.jpg') }}"
+                    alt="Chassi para caminhão"
+                  />
+                </div>
+
+                <h2>
+                  <span>›</span>
+                  Chassi
+                </h2>
+              </a>
+
+              <a
+                href="{{ url_for('catalogo') }}?categoria=Elétrica"
+                class="categoria"
+              >
+                <div class="imagem-categoria">
+                  <img
+                    src="{{ url_for('static', filename='imagens/distribuidora.webp') }}"
+                    alt="Peças elétricas"
+                  />
+                </div>
+
+                <h2>
+                  <span>›</span>
+                  Elétrica
+                </h2>
+              </a>
+            </div>
+          </div>
+
+          <!-- SETAS -->
+
+          <div class="prod-nav">
+            <button
+              type="button"
+              id="prod-prev"
+              aria-label="Categoria anterior"
+            >
+              ‹
+            </button>
+
+            <button type="button" id="prod-next" aria-label="Próxima categoria">
+              ›
+            </button>
+          </div>
+        </div>
+
+        <!-- BOLINHAS -->
+
+        <div class="bolinhas-produtos">
+          <label for="p_slide1" aria-label="Categorias 1"></label>
+
+          <label for="p_slide2" aria-label="Categorias 2"></label>
+
+          <label for="p_slide3" aria-label="Categorias 3"></label>
+        </div>
+      </section>
+
+      <!-- =========================
+             CONTATO
+        ========================= -->
+
+      <section class="faixa-listrada contato" id="contato">
+        <h1>CONTATO</h1>
+
+        <p>Entre em contato com a Truck Parts.</p>
+
+        <div class="dados-contato">
+          <p>
+            <strong>Telefone:</strong>
+            (55) 94915-1878
+          </p>
+
+          <p>
+            <strong>E-mail:</strong>
+            truckparts@hotmail.com
+          </p>
+
+          <p>
+            <strong>Endereço:</strong>
+            São Paulo - SP
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <!-- =========================
+         JAVASCRIPT
+    ========================= -->
+
+    <script>
+      /* =================================
+           CARROSSEL PRINCIPAL AUTOMÁTICO
+        ================================= */
+
+      const slidesPrincipais = [
+        document.getElementById("slide1"),
+        document.getElementById("slide2"),
+        document.getElementById("slide3"),
+      ];
+
+      let slideAtual = 0;
+
+      setInterval(() => {
+        slideAtual++;
+
+        if (slideAtual >= slidesPrincipais.length) {
+          slideAtual = 0;
+        }
+
+        slidesPrincipais[slideAtual].checked = true;
+      }, 4500);
+
+      /* =================================
+           SLIDER DE CATEGORIAS
+        ================================= */
+
+      const produtosSlides = [
+        document.getElementById("p_slide1"),
+        document.getElementById("p_slide2"),
+        document.getElementById("p_slide3"),
+      ];
+
+      let produtoAtual = 0;
+
+      function mudarProduto(direcao) {
+        produtoAtual += direcao;
+
+        if (produtoAtual < 0) {
+          produtoAtual = produtosSlides.length - 1;
+        }
+
+        if (produtoAtual >= produtosSlides.length) {
+          produtoAtual = 0;
+        }
+
+        produtosSlides[produtoAtual].checked = true;
+      }
+
+      document.getElementById("prod-next").addEventListener("click", () => {
+        mudarProduto(1);
+      });
+
+      document.getElementById("prod-prev").addEventListener("click", () => {
+        mudarProduto(-1);
+      });
+
+      /* =================================
+           AUTOPLAY DAS CATEGORIAS
+        ================================= */
+
+      let autoplayProdutos = setInterval(() => {
+        mudarProduto(1);
+      }, 5000);
+
+      const sliderProdutos = document.querySelector(".prod-slider");
+
+      sliderProdutos.addEventListener("mouseenter", () => {
+        clearInterval(autoplayProdutos);
+      });
+
+      sliderProdutos.addEventListener("mouseleave", () => {
+        autoplayProdutos = setInterval(() => {
+          mudarProduto(1);
+        }, 5000);
+      });
+
+      /* =================================
+           ATUALIZAR ÍNDICE AO CLICAR NAS BOLINHAS
+        ================================= */
+
+      produtosSlides.forEach((radio, index) => {
+        radio.addEventListener("change", () => {
+          if (radio.checked) {
+            produtoAtual = index;
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

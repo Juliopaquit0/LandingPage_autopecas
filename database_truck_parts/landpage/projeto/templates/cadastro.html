@@ -1,0 +1,418 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Cadastro | Truck Parts</title>
+
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+
+        min-height: 100vh;
+
+        font-family: Arial, Helvetica, sans-serif;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        padding: 30px 15px;
+
+        background:
+          linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)),
+          url("{{ url_for('static', filename='imagens/scania.jpg') }}") center /
+            cover no-repeat fixed;
+      }
+
+      .formulario {
+        width: 100%;
+
+        max-width: 480px;
+
+        background: rgba(255, 255, 255, 0.97);
+
+        border-radius: 16px;
+
+        overflow: hidden;
+
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+      }
+
+      .topo {
+        background: #e30613;
+
+        color: white;
+
+        padding: 25px;
+
+        text-align: center;
+      }
+
+      .topo h1 {
+        margin: 0;
+
+        font-size: 28px;
+      }
+
+      .topo p {
+        margin: 8px 0 0;
+
+        opacity: 0.9;
+      }
+
+      form {
+        padding: 25px;
+      }
+
+      .grupo {
+        margin-bottom: 15px;
+      }
+
+      label {
+        display: block;
+
+        margin-bottom: 6px;
+
+        font-weight: bold;
+
+        font-size: 13px;
+
+        color: #333;
+      }
+
+      input {
+        width: 100%;
+
+        padding: 12px;
+
+        border: 1px solid #d5d5d5;
+
+        border-radius: 8px;
+
+        outline: none;
+
+        font-size: 14px;
+
+        transition: 0.2s;
+      }
+
+      input:focus {
+        border-color: #e30613;
+
+        box-shadow: 0 0 0 3px rgba(227, 6, 19, 0.1);
+      }
+
+      .linha {
+        display: grid;
+
+        grid-template-columns: 1fr 1fr;
+
+        gap: 12px;
+      }
+
+      .opcoes {
+        display: grid;
+
+        gap: 8px;
+
+        margin-top: 8px;
+      }
+
+      .opcao {
+        display: flex;
+
+        align-items: center;
+
+        gap: 8px;
+
+        font-weight: normal;
+
+        margin: 0;
+      }
+
+      .opcao input {
+        width: auto;
+      }
+
+      button {
+        width: 100%;
+
+        padding: 13px;
+
+        margin-top: 8px;
+
+        border: none;
+
+        border-radius: 8px;
+
+        background: #e30613;
+
+        color: white;
+
+        font-weight: bold;
+
+        font-size: 15px;
+
+        cursor: pointer;
+
+        transition: 0.2s;
+      }
+
+      button:hover {
+        background: #b9000c;
+
+        transform: translateY(-2px);
+      }
+
+      .login {
+        display: block;
+
+        text-align: center;
+
+        margin-top: 18px;
+
+        color: #e30613;
+
+        text-decoration: none;
+
+        font-size: 14px;
+
+        font-weight: bold;
+      }
+
+      .login:hover {
+        text-decoration: underline;
+      }
+
+      @media (max-width: 500px) {
+        .linha {
+          grid-template-columns: 1fr;
+        }
+
+        .formulario {
+          max-width: 100%;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="formulario">
+      <div class="topo">
+        <h1>Truck Parts</h1>
+
+        <p>Crie sua conta</p>
+      </div>
+
+      <form action="{{ url_for('fazer_cadastro') }}" method="post">
+        <div class="grupo">
+          <label for="nome"> Nome completo </label>
+
+          <input
+            type="text"
+            id="nome"
+            name="nome"
+            placeholder="Digite seu nome"
+            autocomplete="name"
+            required
+          />
+        </div>
+
+        <div class="linha">
+          <div class="grupo">
+            <label for="data_nascimento"> Data de nascimento </label>
+
+            <input
+              type="date"
+              id="data_nascimento"
+              name="data_nascimento"
+              required
+            />
+          </div>
+
+          <div class="grupo">
+            <label for="cpf"> CPF </label>
+
+            <input
+              type="text"
+              id="cpf"
+              name="cpf"
+              placeholder="000.000.000-00"
+              maxlength="14"
+              required
+            />
+          </div>
+        </div>
+
+        <div class="linha">
+          <div class="grupo">
+            <label for="telefone"> Telefone </label>
+
+            <input
+              type="tel"
+              id="telefone"
+              name="telefone"
+              placeholder="11999999999"
+              required
+            />
+          </div>
+
+          <div class="grupo">
+            <label for="email"> E-mail </label>
+
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="seuemail@email.com"
+              autocomplete="email"
+              required
+            />
+          </div>
+        </div>
+
+        <div class="linha">
+          <div class="grupo">
+            <label for="cep"> CEP </label>
+
+            <input
+              type="text"
+              id="cep"
+              name="cep"
+              placeholder="00000000"
+              maxlength="9"
+              required
+            />
+          </div>
+
+          <div class="grupo">
+            <label for="numero"> Número </label>
+
+            <input
+              type="text"
+              id="numero"
+              name="numero"
+              placeholder="Número"
+              required
+            />
+          </div>
+        </div>
+
+        <div class="grupo">
+          <label for="complemento"> Complemento </label>
+
+          <input
+            type="text"
+            id="complemento"
+            name="complemento"
+            placeholder="Apartamento, bloco..."
+          />
+        </div>
+
+        <div class="grupo">
+          <label> Tipo de cadastro </label>
+
+          <div class="opcoes">
+            <label class="opcao">
+              <input
+                type="radio"
+                name="tipo_cadastro"
+                value="pessoa_fisica"
+                required
+              />
+
+              Pessoa Física
+            </label>
+
+            <label class="opcao">
+              <input
+                type="radio"
+                name="tipo_cadastro"
+                value="pessoa_juridica"
+              />
+
+              Pessoa Jurídica
+            </label>
+
+            <label class="opcao">
+              <input type="radio" name="tipo_cadastro" value="revendedor" />
+
+              Revendedor
+            </label>
+          </div>
+        </div>
+
+        <div class="grupo">
+          <label> Áreas de interesse </label>
+
+          <div class="opcoes">
+            <label class="opcao">
+              <input type="checkbox" name="interesses" value="mecanica" />
+
+              Mecânica
+            </label>
+
+            <label class="opcao">
+              <input type="checkbox" name="interesses" value="eletrica" />
+
+              Elétrica
+            </label>
+
+            <label class="opcao">
+              <input type="checkbox" name="interesses" value="acessorios" />
+
+              Acessórios
+            </label>
+
+            <label class="opcao">
+              <input type="checkbox" name="interesses" value="pneus" />
+
+              Pneus
+            </label>
+          </div>
+        </div>
+
+        <div class="grupo">
+          <label for="senha"> Senha </label>
+
+          <input
+            type="password"
+            id="senha"
+            name="senha"
+            placeholder="Mínimo 6 caracteres"
+            minlength="6"
+            autocomplete="new-password"
+            required
+          />
+        </div>
+
+        <div class="grupo">
+          <label for="confirmar_senha"> Confirmar senha </label>
+
+          <input
+            type="password"
+            id="confirmar_senha"
+            name="confirmar_senha"
+            placeholder="Digite novamente"
+            minlength="6"
+            autocomplete="new-password"
+            required
+          />
+        </div>
+
+        <button type="submit">Criar minha conta</button>
+
+        <a href="{{ url_for('login') }}" class="login"> Já tenho uma conta </a>
+      </form>
+    </div>
+  </body>
+</html>

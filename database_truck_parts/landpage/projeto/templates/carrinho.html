@@ -1,0 +1,380 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Carrinho | Truck Parts</title>
+
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+
+        font-family: Arial, Helvetica, sans-serif;
+
+        background: #f5f5f5;
+
+        color: #222;
+      }
+
+      .topo {
+        height: 75px;
+
+        background: #e30613;
+
+        color: white;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        font-size: 25px;
+
+        font-weight: bold;
+
+        box-shadow: 0 3px 12px rgba(0, 0, 0, 0.15);
+      }
+
+      .container {
+        width: 92%;
+
+        max-width: 1000px;
+
+        margin: 35px auto 60px;
+      }
+
+      .titulo {
+        margin-bottom: 25px;
+      }
+
+      .titulo h1 {
+        margin: 0;
+
+        font-size: 30px;
+      }
+
+      .titulo p {
+        color: #777;
+      }
+
+      .produto {
+        background: white;
+
+        border: 1px solid #e5e5e5;
+
+        border-radius: 12px;
+
+        padding: 18px;
+
+        margin-bottom: 15px;
+
+        display: flex;
+
+        align-items: center;
+
+        gap: 20px;
+
+        box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
+      }
+
+      .imagem {
+        width: 120px;
+
+        height: 95px;
+
+        background: #f7f7f7;
+
+        border-radius: 10px;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+      }
+
+      .imagem img {
+        max-width: 100%;
+
+        max-height: 90px;
+
+        object-fit: contain;
+      }
+
+      .informacoes {
+        flex: 1;
+      }
+
+      .informacoes h2 {
+        margin: 0;
+
+        font-size: 18px;
+      }
+
+      .informacoes p {
+        margin: 6px 0;
+
+        color: #777;
+
+        font-size: 13px;
+      }
+
+      .quantidade {
+        display: flex;
+
+        align-items: center;
+
+        gap: 8px;
+      }
+
+      .quantidade form {
+        margin: 0;
+      }
+
+      .quantidade button {
+        width: 32px;
+
+        height: 32px;
+
+        border: none;
+
+        border-radius: 6px;
+
+        background: #eee;
+
+        cursor: pointer;
+
+        font-size: 18px;
+      }
+
+      .quantidade button:hover {
+        background: #ddd;
+      }
+
+      .numero {
+        min-width: 30px;
+
+        text-align: center;
+
+        font-weight: bold;
+      }
+
+      .preco {
+        min-width: 120px;
+
+        text-align: right;
+
+        color: #e30613;
+
+        font-size: 18px;
+
+        font-weight: bold;
+      }
+
+      .remover {
+        background: #fff0f0;
+
+        border: 1px solid #ffd0d0;
+
+        color: #e30613;
+
+        padding: 9px 12px;
+
+        border-radius: 7px;
+
+        cursor: pointer;
+
+        font-weight: bold;
+      }
+
+      .remover:hover {
+        background: #e30613;
+
+        color: white;
+      }
+
+      .total {
+        margin-top: 25px;
+
+        background: white;
+
+        border-radius: 12px;
+
+        padding: 22px;
+
+        display: flex;
+
+        justify-content: space-between;
+
+        align-items: center;
+
+        box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
+      }
+
+      .valor {
+        color: #e30613;
+
+        font-size: 26px;
+
+        font-weight: bold;
+      }
+
+      .vazio {
+        background: white;
+
+        padding: 60px 25px;
+
+        border-radius: 14px;
+
+        text-align: center;
+      }
+
+      .vazio a {
+        display: inline-block;
+
+        margin-top: 15px;
+
+        padding: 12px 20px;
+
+        background: #e30613;
+
+        color: white;
+
+        text-decoration: none;
+
+        border-radius: 8px;
+
+        font-weight: bold;
+      }
+
+      .voltar {
+        display: block;
+
+        margin-top: 25px;
+
+        text-align: center;
+
+        color: #e30613;
+
+        text-decoration: none;
+
+        font-weight: bold;
+      }
+
+      @media (max-width: 700px) {
+        .produto {
+          flex-wrap: wrap;
+        }
+
+        .informacoes {
+          min-width: calc(100% - 140px);
+        }
+
+        .preco {
+          text-align: left;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <header class="topo">TRUCK PARTS</header>
+
+    <main class="container">
+      <div class="titulo">
+        <h1>Meu carrinho</h1>
+
+        <p>Confira seus produtos antes de continuar.</p>
+      </div>
+
+      {% if items %} {% for item in items %}
+
+      <article class="produto">
+        <div class="imagem">
+          <img
+            src="{{ url_for(
+                        'static',
+                        filename=item.imagem
+                    ) }}"
+            alt="{{ item.descricao_prod }}"
+          />
+        </div>
+
+        <div class="informacoes">
+          <h2>{{ item.descricao_prod }}</h2>
+
+          <p>{{ item.marca_produto }}</p>
+
+          <p>{{ item.categoria }}</p>
+        </div>
+
+        <div class="quantidade">
+          <form
+            method="post"
+            action="{{ url_for(
+                        'diminuir_quantidade',
+                        cart_id=item.id_carrinho
+                    ) }}"
+          >
+            <button type="submit">−</button>
+          </form>
+
+          <span class="numero"> {{ item.quantidade }} </span>
+
+          <form
+            method="post"
+            action="{{ url_for(
+                        'aumentar_quantidade',
+                        cart_id=item.id_carrinho
+                    ) }}"
+          >
+            <button type="submit">+</button>
+          </form>
+        </div>
+
+        <div class="preco">R$ {{ "%.2f"|format(item.subtotal) }}</div>
+
+        <form
+          method="post"
+          action="{{ url_for(
+                    'remove_from_cart',
+                    cart_id=item.id_carrinho
+                ) }}"
+        >
+          <button class="remover" type="submit">Remover</button>
+        </form>
+      </article>
+
+      {% endfor %}
+
+      <div class="total">
+        <strong> Total do pedido </strong>
+
+        <span class="valor"> R$ {{ "%.2f"|format(total) }} </span>
+      </div>
+
+      {% else %}
+
+      <div class="vazio">
+        <h2>Seu carrinho está vazio</h2>
+
+        <p>Adicione produtos ao carrinho para continuar.</p>
+
+        <a href="{{ url_for('catalogo') }}"> Ir para o catálogo </a>
+      </div>
+
+      {% endif %}
+
+      <a class="voltar" href="{{ url_for('catalogo') }}">
+        ← Continuar comprando
+      </a>
+    </main>
+  </body>
+</html>
